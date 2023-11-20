@@ -11,6 +11,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -43,7 +45,7 @@ public class UserControllerTest {
         UserDTO user = new UserDTO(1, "Nirajan", "niraja@123", "texas", "roanoke");
 
         when(userService.getUserById(id)).thenReturn(new ResponseEntity<>(user, HttpStatus.OK));
-        ResponseEntity<UserDTO> response = userService.getUserById(id);
+        ResponseEntity<UserDTO> response = userController.getUserById(id);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(user, response.getBody());
 
