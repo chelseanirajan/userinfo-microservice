@@ -4,7 +4,6 @@ import com.cotiviti.userinfo.dto.UserDTO;
 import com.cotiviti.userinfo.entity.User;
 import com.cotiviti.userinfo.mapper.UserMapper;
 import com.cotiviti.userinfo.repository.UserRepository;
-import com.cotiviti.userinfo.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,18 +17,20 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class UserServiceImplTest {
+ class UserServiceImplTest {
     @InjectMocks
     UserServiceImpl userService;
 
     @Mock
     UserRepository userRepository;
+
     @BeforeEach
-    public void setUp(){
+     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+
     @Test
-    public void testAddUser(){
+     void testAddUser() {
         UserDTO userdto = new UserDTO(1, "Nirajan", "nirajan@123", "texas", "roanoke");
         User user = UserMapper.INSTANCE.mapUserDTOToUser(userdto);
         when(userRepository.save(user)).thenReturn(user);
@@ -38,9 +39,10 @@ public class UserServiceImplTest {
         verify(userRepository, times(1)).save(user);
         assertEquals(userdto, userDTO);
     }
+
     @Test
-    public void testGetUserById(){
-        int id = 1 ;
+     void testGetUserById() {
+        int id = 1;
         User user = new User(1, "Nirajan", "nirajan@123", "texas", "roanoke");
         when(userRepository.findById(id)).thenReturn(Optional.of(user));
         ResponseEntity<UserDTO> userDTOResponseEntity = userService.getUserById(id);
@@ -50,8 +52,9 @@ public class UserServiceImplTest {
 
 
     }
+
     @Test
-    public void testGetUserByIdNotId(){
+     void testGetUserByIdNotId() {
         int id = 1;
         when(userRepository.findById(id)).thenReturn(Optional.empty());
         ResponseEntity<UserDTO> response = userService.getUserById(id);
